@@ -1,7 +1,15 @@
+const API_KEY = process.env.NEXT_PUBLIC_APIKEY;
+
 const handler = async (req, res) => {
+  const search = req.query.search;
+  const gameId = req.query.gameId;
   try {
+    console.log('API_KEY:', API_KEY);
     const rawgResponse = await fetch(
-      `https://api.rawg.io/api/games?key=6884f8a9be8d43588ef10f6117925076`
+      // `https://api.rawg.io/api/games?key=6884f8a9be8d43588ef10f6117925076`
+      `https://api.rawg.io/api/games${gameId == 0 ? '' : `/${gameId}`}?key=${API_KEY}${
+        search !== '' ? `&search=${search}` : ''
+      }`
     );
 
     if (!rawgResponse.ok) {
